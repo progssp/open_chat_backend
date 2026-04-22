@@ -1,0 +1,5 @@
+/group_icons/
+/sent_files/
+/test_dir/
+/user_icons/
+!.gitignore
