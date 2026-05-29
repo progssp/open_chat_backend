@@ -28,8 +28,12 @@ COPY . .
 # copy nginx conf
 COPY nginx.conf /etc/nginx/sites-available/default
 COPY supervisor.conf /etc/supervisor/conf.d/supervisord.conf
-COPY start.sh /start.sh
-RUN sed -i 's/\r$//' /start.sh
+
+RUN echo '#!/bin/sh' > /start.sh && \
+    echo 'php artisan config:cache' >> /start.sh && \
+    echo 'php artisan route:cache' >> /start.sh && \
+    echo 'php artisan view:cache' >> /start.sh && \
+    echo '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf' >> /start.sh
 
 # set permissions for storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
