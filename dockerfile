@@ -1,4 +1,4 @@
-FROM php:8.5-fpm-alpine
+FROM php:8.5-fpm
 
 # install system dependencies and nginx
 RUN apt-get update && apt-get install -y \
