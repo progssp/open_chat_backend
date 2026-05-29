@@ -29,12 +29,6 @@ COPY . .
 COPY nginx.conf /etc/nginx/sites-available/default
 COPY supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 
-RUN echo '#!/bin/sh' > /start.sh && \
-    echo 'php artisan config:cache' >> /start.sh && \
-    echo 'php artisan route:cache' >> /start.sh && \
-    echo 'php artisan view:cache' >> /start.sh && \
-    echo '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf' >> /start.sh
-
 # set permissions for storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -44,7 +38,4 @@ RUN composer install --no-dev --optimize-autoloader
 # expose port 80
 EXPOSE 80
 
-# make start.sh executable
-RUN chmod +x /start.sh
-
-CMD ["/bin/sh","/start.sh"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
