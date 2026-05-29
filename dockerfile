@@ -28,7 +28,8 @@ COPY . .
 # copy nginx conf
 COPY nginx.conf /etc/nginx/sites-available/default
 COPY supervisor.conf /etc/supervisor/conf.d/supervisord.conf
-COPY start.sh /usr/local/bin/start.sh
+COPY start.sh /start.sh
+RUN sed -i 's/\r$//' /start.sh
 
 # set permissions for storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -40,6 +41,6 @@ RUN composer install --no-dev --optimize-autoloader
 EXPOSE 80
 
 # make start.sh executable
-RUN chmod +x /usr/local/bin/start.sh
+RUN chmod +x /start.sh
 
-CMD ["/usr/local/bin/start.sh"]
+CMD ["/bin/sh","/start.sh"]
