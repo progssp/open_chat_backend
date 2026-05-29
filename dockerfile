@@ -2,7 +2,7 @@ FROM php:8.5-fpm
 
 # install system dependencies and nginx
 RUN apt-get update && apt-get install -y \
-    nginx \
+    nginx supervisor \
     zip \
     unzip \
     git \
@@ -25,11 +25,15 @@ WORKDIR /var/www/html
 
 COPY . .
 
+# copy nginx conf
+COPY nginx.conf /etc/nginx/sites-available/default
+COPY supervisor.conf /etc/supervisor/conf.d/laravel.conf
+
 # set permissions for storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# copy nginx conf
-COPY nginx.conf /etc/nginx/sites-available/default
+# instal composer dependencies
+RUN composer install --no-dev --optimize-autoloader
 
 # expose port 80
 EXPOSE 80
@@ -38,4 +42,4 @@ EXPOSE 80
 COPY start.sh /start.sh
 RUN chmod +x start.sh
 
-CMD ["/start.sh"]
+CMD ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/laravel.conf"]
