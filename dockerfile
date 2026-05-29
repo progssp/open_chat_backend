@@ -1,4 +1,4 @@
-FROM php:8.5-fpm
+FROM php:8.5-fpm-alpine
 
 # install system dependencies and nginx
 RUN apt-get update && apt-get install -y \
@@ -27,7 +27,8 @@ COPY . .
 
 # copy nginx conf
 COPY nginx.conf /etc/nginx/sites-available/default
-COPY supervisor.conf /etc/supervisor/conf.d/laravel.conf
+COPY supervisor.conf /etc/supervisor/conf.d/supervisord.conf
+COPY start.sh /usr/local/bin/start.sh
 
 # set permissions for storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -38,8 +39,7 @@ RUN composer install --no-dev --optimize-autoloader
 # expose port 80
 EXPOSE 80
 
-# run s startup script
-COPY start.sh /start.sh
-RUN chmod +x start.sh
+# make start.sh executable
+RUN chmod +x /usr/local/bin/start.sh
 
-CMD ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/laravel.conf"]
+CMD ["/usr/local/bin/start.sh"]
