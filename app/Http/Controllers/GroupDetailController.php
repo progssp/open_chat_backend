@@ -16,8 +16,8 @@ use DB;
 class GroupDetailController extends Controller {
     
     public function create_group(Request $request){
+        $icon_path = null;
         $validator = Validator::make($request->all(), [
-            'icon' => 'required',
             'name' => 'required',
             'tagline' => 'required',
             'description' => 'required',
@@ -29,27 +29,25 @@ class GroupDetailController extends Controller {
         DB::beginTransaction();
         try{
             if($request->hasFile('icon')){
-                $icon_path = $request->file('icon')->store('group_icons');                
-                // $icon_path = substr($icon_path,strpos($icon_path,"/"),strlen($icon_path));
-                $name = $request->name;
-                $tagline = $request->tagline;
-                $description = $request->description;
+                $icon_path = $request->file('icon')->store('group_icons');
+            }                
+            // $icon_path = substr($icon_path,strpos($icon_path,"/"),strlen($icon_path));
+            $name = $request->name;
+            $tagline = $request->tagline;
+            $description = $request->description;
 
-                $new_group = GroupDetail::insertGetId([
-                    'created_by' => $request->user()->id,
-                    'icon' => $icon_path,
-                    'name' => $name,
-                    'tagline' => $tagline,
-                    'description' => $description,
-                    'created_at' => date('Y-m-d H:i:s')
-                ]);
+            $new_group = GroupDetail::insertGetId([
+                'created_by' => $request->user()->id,
+                'icon' => $icon_path ?? '/defaults/user_icons/default_profile_image.jpg',
+                'name' => $name,
+                'tagline' => $tagline,
+                'description' => $description,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
 
-                DB::commit();
-                return response()->json(['status'=>true,'msg'=>"group created",'data'=>$new_group]);
-            }
-            else {
-                return response()->json(['status'=>false,'msg'=>"group not created"]);
-            }
+            DB::commit();
+            return response()->json(['status'=>true,'msg'=>"group created",'data'=>$new_group]);
+            
         }
         catch(\Exception $e){
             DB::rollback();
@@ -102,7 +100,8 @@ class GroupDetailController extends Controller {
             }
 
             // getting last message to broadcast
-            $last_msg = DB::select('call getLastGroupMessage('.$request->group_id.')');
+            // $last_msg = DB::select('call getLastGroupMessage('.$request->group_id.')');
+            $last_msg = GroupMessageController::get_last_group_message($request->group_id);
             $last_msg = $last_msg[0];
 
             //broadcast msg;

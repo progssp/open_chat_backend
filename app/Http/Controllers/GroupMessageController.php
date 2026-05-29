@@ -108,7 +108,7 @@ class GroupMessageController extends Controller {
         ->with(['group_details' => function($qry){
             $qry->select('id','name as group_nm','icon','tagline','description');
         }])
-        ->where('group_id',1)
+        ->where('group_id',$group_id)
         ->orderBy('created_at','DESC')
         ->get();
         if($data->isNotEmpty()){
@@ -134,10 +134,10 @@ class GroupMessageController extends Controller {
             }
             
             
-            return response()->json($final_arr);
+            return response()->json(['status'=>true,'messages'=>$final_arr]);
         }
         else{
-            echo "not found";
+            return response()->json(['status'=>false,'msg'=>'no message']);
         }        
     }
 

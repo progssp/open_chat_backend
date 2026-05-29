@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
@@ -209,5 +210,22 @@ class TestController extends Controller
         else{
             return response()->json(['status'=>false,'msg'=>'either upload text file or enter some text']);
         }
+    }
+
+    public function handle_webhook(Request $request){
+        $signature = $request->header('X-Pusher-Signature');
+        $body = $request->getContent();
+        $hopedSignature = hash_hmac('sha256',$body,config('broadcasting.connections.pusher.secret'));
+
+        if($signature !== $hopedSignature){
+            return response()->json(['err' => 'invald sig'],400);
+        }
+
+        $payload = json_decode($body,true);
+        foreach($payload['events'] as $events){
+            Log::info($events);
+        }
+        
+        return response()->json(['status' => 'OK'],200);
     }
 }

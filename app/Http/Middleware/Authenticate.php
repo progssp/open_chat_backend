@@ -13,14 +13,14 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         if ($request->cookie("token")) {
-            Log::info("cookie found in test: " . $request->cookie("token"));
+            // Log::info("cookie found in test: " . $request->cookie("token"));
             $request->headers->set(
                 "Authorization",
                 "Bearer " . $request->cookie("token"),
             );
         } elseif ($request->header("Authorization")) {
         } else {
-            Log::info("no cookie found from test");
+            // Log::info("no cookie found from test");
             $this->redirectTo($request);
             // return response()->json(['status'=>false,'msg'=>'not an authenticated user!']);
         }

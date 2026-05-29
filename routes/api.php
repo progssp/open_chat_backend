@@ -15,6 +15,7 @@ Route::get("/",function(){
 
 Route::post('/word-freq', [TestController::class,'word_freq']);
 
+Route::post('/webhook', [TestController::class,'handle_webhook']);
 
 //routes for development
 Route::post('/generate-group-mess', [GroupMessageController::class,'generate_group_mess']);
@@ -29,11 +30,6 @@ Route::prefix('user')->group(function(){
     Route::post('register', [UserController::class, 'register']);
    
     Route::post('/check-username-availability', [UserController::class,'check_username_availability']);
-
-    Route::post('/get-one-to-one-messages',[OneToOneMessageController::class,'get_one_to_one_messages']);
-    
-    Route::post('/get-group-messages',[GroupMessageController::class,'get_group_messages']);
-    Route::post('/search-users',[UserController::class,'search_users']);
 
 
 
@@ -51,6 +47,11 @@ Route::prefix('user')->group(function(){
         Route::post('/send-group-message',[GroupMessageController::class,'send_group_message']);
         
         Route::post('/send-one-to-one-message',[OneToOneMessageController::class,'send_one_to_one_message']);
+
+        Route::post('/get-one-to-one-messages',[OneToOneMessageController::class,'get_one_to_one_messages']);
+    
+        Route::post('/get-group-messages',[GroupMessageController::class,'get_group_messages']);
+        Route::post('/search-users',[UserController::class,'search_users']);
 
         
         Route::post('/start-video-call',[OneToOneMessageController::class,'start_video_call']);

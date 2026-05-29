@@ -72,7 +72,7 @@ class OneToOneMessageController extends Controller
         })
         ->orderBy('created_at','DESC')
         ->get();
-        return ($data);
+        
 
         if($data->isNotEmpty()){
             
@@ -97,10 +97,10 @@ class OneToOneMessageController extends Controller
             }
             
             
-            return response()->json($final_arr);
+            return response()->json(['status'=>true,'messages'=>$final_arr]);
         }
         else{
-            echo "not found";
+            return response()->json(['status'=>false,'msg'=>'no message']);
         }
     }
 
