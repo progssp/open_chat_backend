@@ -1,25 +1,28 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\TestController;
 
 Route::get('/home', function () {
     return view('welcome');
 });
-Route::get('login2', function(){
-    $ar = [2,4,76,89,43,65,90,65,23,1];
-    $tmp = 0;
-    echo "unsorted<br/>" . json_encode($ar) . "<br/>";
-    for($i=0;$i<count($ar);$i++){
-        for($j=0;$j<count($ar)-1;$j++){
-            if($ar[$j+1] > $ar[$j]){
-                $tmp = $ar[$j];
-                $ar[$j] = $ar[$j+1];
-                $ar[$j+1] = $tmp;
-            }
-        }
-    }
-    echo "sorted<br/>" . json_encode($ar) . "<br/>";
-    // return response()->json("hell2o");
+Route::get('create-cache', function(){
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
+    Artisan::call('optimize');   
+    return response()->json(['status' => true,'msg' => 'cache made & optimized']);
+});
+Route::get('delete-cache', function(){
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('optimize');   
+    return response()->json(['status' => true,'msg' => 'cache cleared & optimized']);
+});
+Route::get('storage-link', function(){
+    Artisan::call('storage:link'); 
+    return response()->json(['status' => true,'msg' => 'storage linked']);
 });
 Route::get('/multiple-data',[App\Http\Controllers\Controller::class, 'multiple_data']);
 
