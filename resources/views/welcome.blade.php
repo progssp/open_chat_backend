@@ -130,39 +130,5 @@
                 </div>
             </div>
         </div>
-
-
-
-
-        <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
-        <script>
-            function subscribeSocket(){
-                let a_tok = document.querySelector('meta[name="csrf-token"]').content;
-                //suscribing to pusher channel
-                Pusher.logToConsole = true;
-                var pusher = new Pusher('12345', {
-                    cluster: 'mt1',
-                    broadcaster: 'pusher',
-                    authEndpoint:'/api/broadcasting/auth',
-                    auth:{
-                        headers:{
-                            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNDQwMWNkYjczMGNjYTJmMTVmZDJhNDEzNjgzOGQ3MzdiOWE4NDg2MjUwYzQ0M2JlMjdhMWI1YzRkZjg4NmZlMGUwYzk4YzFhYmU0ZWYxYzciLCJpYXQiOjE2ODI1MjQzMTUuNzUwNzMzLCJuYmYiOjE2ODI1MjQzMTUuNzUwNzQyLCJleHAiOjE3MTQxNDY3MTUuNzEzMjY1LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.Ah4xECXdnfyCkm1bvaylf_4Wvgu6AKcqVO54q3slo9A8al3Xyo4DJUwf9r9uUtqRfTZlZBTeJgJyVCX8UOojdTRxEPvMCA-2SWNKUFATmql0v5IBwS3M7CEX622knzgh3Lf-Qc2vmFCZMBAwaqeKDKsM3AT3WBruUV9koxwxwWOfs4x2tC978e9ivJ90h9tuVQ8TyByp6U4vOWM1XaGddEG4VH4KY0ifnKNfj1nyFbbNI94W58yPC4j9lTJ5TKS9SfvfdcZYRO8AJHpX5FcLaiexLguBGJw24WdrzNYHl5pbiWMDC5rtEKPh021mx461CO1g-c8fD61x4CnGLWOmst1ym6-YvIQHrLdn7uNeXFO6ozPdN_3-quPDepyThGVumRYSFi3mnzACKVO6yNVpH4wLZy1EAGUdVm9eCjy7iKb6r_d_6DcOCwsL6PBn0ZjlWP5ikEIrxdXXzY3stmhfQ7SHYu9PCYwChbVArbJvwAtsw1RApisHrhATBqKoYOSXyoPPgU1c4nugfvp12k2ZnJ3s9I631URdS-yUPtmiJ6tbdz8PJdhuh8poXCpt-Nd2lfIRGteryA8c9U05ia0E1OpGHWeflJ_WseJLZFqkoEbPpQ5ulCmmCqD-DpNEcihWdoCTjb8yrcCXLpulwnkBRiGNP2-16wGRkr2Jatv7Zcw',
-                            'X-CSRF-TOKEN':a_tok
-                        }
-                    },
-                    //key: process.env.MIX_PUSHER_APP_KEY,
-                    //cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-                    forceTLS: false,
-                    wsHost: window.location.hostname,
-                    wsPort: 6001,
-                });
-                var channel = pusher.subscribe('private-user-5');
-            }
-
-            window.addEventListener('DOMContentLoaded', (evt)=>{
-                console.log('loaded'+window.location.hostname);
-                subscribeSocket();
-            });
-        </script>
     </body>
 </html>
