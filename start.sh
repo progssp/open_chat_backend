@@ -2,7 +2,7 @@
 set -e
 
 # run migrations and make caches
-php artisan migrate --force
+php /var/www/html/artisan migrate --force || echo "migration err $?"
 
 
 echo "launching web server and queue workers"
