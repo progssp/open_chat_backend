@@ -1,10 +1,10 @@
 FROM php:8.5-fpm-alpine
 
 # install system dependencies and nginx
-RUN apk add --no-cache nginx supervisor zip unzip git libonig-dev libpng-dev libjpeg-turbo-dev freetype-dev shadow
+RUN apk add --no-cache nginx supervisor zip unzip git libpng-dev libjpeg-turbo-dev freetype-dev shadow
 
 # install extensions for laravel
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # get composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
