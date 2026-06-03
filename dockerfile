@@ -16,7 +16,7 @@ COPY . /var/www/html
 # install composer dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-RUN mkdir -p /var/log/supervisor /var/run /var/log/nginx && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/lib/nginx /var/log/nginx
+RUN mkdir -p /var/log/supervisor /var/run /var/log/nginx && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public /var/lib/nginx /var/log/nginx
 
 # copy nginx conf
 COPY nginx.conf /etc/nginx/sites-available/default
