@@ -4,7 +4,7 @@ set -e
 # run migrations
 php /var/www/html/artisan migrate --force || echo "migration err $?"
 
-php /var/www/html/artisan storage:link"
+php /var/www/html/artisan storage:link
 
 ls -l /var/www/html
 ls -l /var/www/html/public
