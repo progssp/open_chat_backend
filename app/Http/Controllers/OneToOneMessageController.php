@@ -85,8 +85,8 @@ class OneToOneMessageController extends Controller
                 $final_obj->sender_nm = $indi_msg->user_sender->sender_nm;
                 $final_obj->sender_icon = $indi_msg->user_sender->sender_icon;
                 $final_obj->receiver_id = $indi_msg->receiver_id;
-                $final_obj->receiver_nm = $indi_msg->user_sender->receiver_nm;
-                $final_obj->receiver_icon = $indi_msg->user_sender->receiver_icon;
+                $final_obj->receiver_nm = $indi_msg->user_receiver->receiver_nm;
+                $final_obj->receiver_icon = $indi_msg->user_receiver->receiver_icon;
                 $final_obj->message_type = $indi_msg->message_type;
                 $final_obj->message = $indi_msg->message;
                 $final_obj->file_type = $indi_msg->file_type;
