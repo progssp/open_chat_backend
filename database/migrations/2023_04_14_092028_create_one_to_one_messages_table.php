@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('file_path')->nullable()->default(NULL);
             $table->string('file_type')->nullable()->default(NULL);
             $table->string('secret_string');
-            $table->string('message_type')->default('on_to_one');
+            $table->string('message_type')->default('one_to_one');
             $table->softDeletes();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->default(NULL)->useCurrentOnUpdate();
