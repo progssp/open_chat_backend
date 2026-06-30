@@ -48,7 +48,7 @@ sequenceDiagram
     User2->>User1: 2. Accept call (via Pusher)
     User1->>User2: 3. Send offer and icecandidates
     User2->>User1: 3. Send answer and icecandidates
-    Note over User, User2: P2P call started
+    Note over User1, User2: P2P call started
 ```
 
 </details>
