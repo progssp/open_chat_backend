@@ -38,21 +38,17 @@ Open chat backend is a set of real-time backend APIs for a communication platfor
 This architecture flow chart illustrates how the backend leverages **Puhser** to coordinate network handshakes to let peers stream directly.
 
 ```mermaid
-graph TD
-    StartNode([START]) --> A(Caller UI)
-    A -->|1. Clicks call button & sends call request| B(Pusher)
-    B -->|2. broadcast call request to callee| C[Callee UI]
-    C --> Choice{Does callee accept?}
-    Choice --> |send reject call| B
-    B --> |3. broadcast reject call| A
-    A --> EndNode([STOP])
-    Choice --> |send accept call| B
-    B --> |4. broadcast accept call| A
-    A --> |5. sends offer & icecandidates| B
-    B --> |6. broadcast offer & icecandidates to callee| C
-    C --> |7. sends answer & icecandidates| B
-    B --> |8. broadcast answer & icecandidates to caller| A
-    A --> |9. call connected| C
+sequenceDiagram
+    autonumber
+    actor User1 as React client 1
+    actor User2 as React client 2
+
+    User1->>User2: 1. Video call request (via Pusher)
+    Note over User2: Accept or reject
+    User2->>User1: 2. Accept call (via Pusher)
+    User1->>User2: 3. Send offer and icecandidates
+    User2->>User1: 3. Send answer and icecandidates
+    Note over User, User2: P2P call started
 ```
 
 </details>
