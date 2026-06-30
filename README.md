@@ -6,7 +6,7 @@
 ---
 
 ## Frontend repo link
-[![](https://img.shields.io/badge/Backend%20repo%20link-2563eb)](https://github.com/progssp/open_chat_frontend)
+[![](https://img.shields.io/badge/Frontend%20repo%20link-2563eb)](https://github.com/progssp/open_chat_frontend)
 
 ---
 
