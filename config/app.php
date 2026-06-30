@@ -20,7 +20,7 @@ return [
     //encryption secrets
     'ciphering'      => "AES-128-CTR",
     'encryption_iv'  => 'vkraatcncyptioiv',
-    'encryption_key' => "vikramatechsecretstring",
+    'encryption_key' => "openchatsecretstring",
     'options' => 0,
 
     /*
